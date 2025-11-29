@@ -27,8 +27,8 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, onClose }) => {
               <h3 className="text-lg font-semibold text-white mb-2">Angaben gemäß § 5 TMG</h3>
               <p>
                 Patrick Brösamle<br />
-                [Straße Hausnummer]<br />
-                [PLZ Ort]
+                Blumenstr. 91<br />
+                01307 Dresden
               </p>
             </section>
 
@@ -43,8 +43,8 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, onClose }) => {
               <h3 className="text-lg font-semibold text-white mb-2">Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</h3>
               <p>
                 Patrick Brösamle<br />
-                [Straße Hausnummer]<br />
-                [PLZ Ort]
+                Blumenstr. 91<br />
+                01307 Dresden
               </p>
             </section>
 
