@@ -51,7 +51,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ onSendMessage, mes
       case 'text':
       default:
         return (
-          <div className="whitespace-pre-wrap text-slate-300 leading-relaxed">
+          <div className="whitespace-pre-wrap text-slate-300 leading-relaxed dark:text-slate-300 light:text-slate-700">
             {msg.text}
           </div>
         );
@@ -84,12 +84,12 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ onSendMessage, mes
         {messages.map((msg) => (
           <div key={msg.id} className="animate-in fade-in duration-300">
             {msg.sender === 'user' ? (
-              <div className="flex gap-2 text-slate-400 mt-6 mb-2 break-words">
+              <div className="flex gap-2 text-slate-400 mt-6 mb-2 break-words dark:text-slate-400 light:text-slate-600">
                 <span className="text-green-500 shrink-0">visitor@broesamle.dev:{currentPath === '/home/visitor' ? '~' : currentPath}$</span>
-                <span className="text-white">{msg.text}</span>
+                <span className="text-white dark:text-white light:text-slate-900">{msg.text}</span>
               </div>
             ) : (
-              <div className="ml-0 md:ml-4 border-l-2 border-slate-800 pl-4 py-1 overflow-x-auto">
+              <div className="ml-0 md:ml-4 border-l-2 border-slate-800 pl-4 py-1 overflow-x-auto dark:border-slate-800 light:border-slate-300">
                 <span className="text-accent text-xs font-bold mb-1 block opacity-50">[SYSTEM_RESPONSE]</span>
                 {renderMessageContent(msg)}
               </div>
@@ -108,7 +108,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ onSendMessage, mes
       </div>
 
       {/* Input Area */}
-      <div className="mt-auto pt-4 border-t border-slate-800 sticky bottom-0 bg-slate-950/90 backdrop-blur-sm pb-4 md:pb-0">
+      <div className="mt-auto pt-4 border-t border-slate-800 sticky bottom-0 bg-slate-950/90 backdrop-blur-sm pb-4 md:pb-0 dark:bg-slate-950/90 light:bg-slate-100/90 light:border-slate-300 transition-colors duration-300">
         <form onSubmit={handleSubmit} className="flex items-center gap-2">
           <span className="text-green-500 shrink-0 text-xs md:text-sm">visitor@broesamle.dev:{currentPath === '/home/visitor' ? '~' : currentPath}$</span>
           <input
@@ -117,7 +117,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ onSendMessage, mes
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            className="flex-1 bg-transparent border-none outline-none text-white placeholder-slate-600 caret-accent min-w-0"
+            className="flex-1 bg-transparent border-none outline-none text-white placeholder-slate-600 caret-accent min-w-0 dark:text-white light:text-slate-900 transition-colors duration-300"
             autoFocus
             spellCheck={false}
             autoComplete="off"

@@ -2,8 +2,12 @@ import { useState, useCallback } from 'react';
 import { Message } from '../types';
 import { knowledgeBase, defaultResponse } from '../data/knowledgeBase';
 import { fileSystem, FileSystemItem } from '../data/fileSystem';
+import { useTheme } from '../context/ThemeContext';
 
 export const useChat = () => {
+  const { theme, setTheme } = useTheme();
+  const [themeConfirmationStep, setThemeConfirmationStep] = useState(0);
+
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
@@ -83,6 +87,34 @@ export const useChat = () => {
         timestamp: new Date()
       };
 
+      // Theme Confirmation Flow
+      // We need to check the state from the closure, but since this is inside setTimeout, 
+      // we might have stale state issues if we rely on the outer scope variable directly 
+      // without it being in the dependency array correctly or using a ref.
+      // However, the main issue is likely that `themeConfirmationStep` is 0 inside this callback 
+      // because `processMessage` is recreated when `currentPath` changes, but maybe not when `themeConfirmationStep` changes?
+      // Actually, `processMessage` depends on `currentPath` only in the dependency array below.
+      // We need to add `themeConfirmationStep` to the dependency array.
+
+      if (themeConfirmationStep > 0) {
+        if (['yes', 'y', 'ja', 'j'].includes(lowerText)) {
+            if (themeConfirmationStep === 1) {
+                setThemeConfirmationStep(2);
+                responseMsg.text = "I really love dark mode and highly recommend it for the best experience.\nAre you really, really sure you want to switch to light mode? [y/n]";
+            } else if (themeConfirmationStep === 2) {
+                setTheme('light');
+                setThemeConfirmationStep(0);
+                responseMsg.text = "Theme switched to Light Mode. My eyes! 😵";
+            }
+        } else {
+            setThemeConfirmationStep(0);
+            responseMsg.text = "Wise choice! Dark mode is the best.";
+        }
+        setMessages(prev => [...prev, responseMsg]);
+        setIsTyping(false);
+        return;
+      }
+
       // --- Terminal Commands ---
 
       if (command === 'ls' || command === 'll') {
@@ -103,6 +135,16 @@ export const useChat = () => {
         } else {
           responseMsg.text = `ls: cannot access '${args[1] || '.'}': No such file or directory`;
         }
+      }
+
+      else if (command === 'toggle' && args[1] === 'theme') {
+          if (theme === 'light') {
+              setTheme('dark');
+              responseMsg.text = "Back to the comfort of Dark Mode.";
+          } else {
+              setThemeConfirmationStep(1);
+              responseMsg.text = "Are you sure you want to switch to Light Mode? [y/n]";
+          }
       }
 
       else if (command === 'cd') {
@@ -258,7 +300,7 @@ export const useChat = () => {
       setIsTyping(false);
     }, delay);
 
-  }, [currentPath]);
+  }, [currentPath, themeConfirmationStep, theme]);
 
   const tabComplete = (input: string): string => {
     const args = input.split(' ');
