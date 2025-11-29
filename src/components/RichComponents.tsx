@@ -6,12 +6,12 @@ export const SkillsComponent: React.FC = () => {
     {
       title: "Core & Backend",
       icon: <Terminal className="text-green-400" />,
-      skills: ["C# .NET", "Python", "Java", "Microservices", "ASP.NET Core"]
+      skills: ["C# .NET", "EF Core", "ASP.NET Core", "Python", "Java", "Microservices", "REST"]
     },
     {
       title: "AI & Data",
       icon: <Cpu className="text-purple-400" />,
-      skills: ["LLMs", "Neural Networks", "GANs", "SQL", "PostgreSQL"]
+      skills: ["LLMs", "Google Gemini", "OpenAI GPT", "Prompt Engineering", "Neural Networks", "GANs", "Image Generation", "SQL", "PostgreSQL"]
     },
     {
       title: "Cloud & DevOps",
