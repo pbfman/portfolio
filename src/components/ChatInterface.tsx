@@ -84,11 +84,6 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ onSendMessage, mes
           <p>Patrick Brösamle (pbfman) - Portfolio Terminal</p>
           <p>Last login: {new Date().toUTCString()}</p>
         </div>
-
-        {/* Mobile Header */}
-        <div className="mb-6 text-slate-500 text-xs border-b border-slate-800 pb-2 md:hidden">
-          <p className="text-accent font-bold">visitor@broesamle.dev:{currentPath === '/home/visitor' ? '~' : currentPath}$ ./start_session.sh</p>
-        </div>
       </div>
 
       {/* Output Area */}
