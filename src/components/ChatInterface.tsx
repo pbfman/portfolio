@@ -77,7 +77,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ onSendMessage, mes
   };
 
   return (
-    <div className="font-mono text-sm md:text-base p-4 md:p-8 max-w-4xl mx-auto min-h-screen supports-[min-height:100dvh]:min-h-[100dvh] flex flex-col">
+    <div className="font-mono text-sm md:text-base p-4 md:p-8 max-w-4xl mx-auto min-h-[calc(100vh-4rem)] md:min-h-screen supports-[min-height:100dvh]:min-h-[calc(100dvh-4rem)] md:supports-[min-height:100dvh]:min-h-[100dvh] flex flex-col pb-24 md:pb-24">
       {/* Terminal Header */}
       <div className="mb-8 text-slate-500 text-xs md:text-sm border-b border-slate-800 pb-2 hidden md:block">
         <p>Patrick Brösamle (pbfman) - Portfolio Terminal</p>
@@ -118,21 +118,23 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ onSendMessage, mes
       </div>
 
       {/* Input Area */}
-      <div className="mt-auto pt-4 border-t border-slate-800 sticky bottom-0 bg-slate-950/90 backdrop-blur-sm pb-4 md:pb-0 dark:bg-slate-950/90 light:bg-slate-100/90 light:border-slate-300 transition-colors duration-300">
-        <form onSubmit={handleSubmit} className="flex items-center gap-2">
-          <span className="text-green-500 shrink-0 text-xs md:text-sm">visitor@broesamle.dev:{currentPath === '/home/visitor' ? '~' : currentPath}$</span>
-          <input
-            ref={inputRef}
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={handleKeyDown}
-            className="flex-1 bg-transparent border-none outline-none text-white placeholder-slate-600 caret-accent min-w-0 dark:text-white light:text-slate-900 transition-colors duration-300"
-            autoFocus
-            spellCheck={false}
-            autoComplete="off"
-          />
-        </form>
+      <div className="fixed bottom-0 left-0 right-0 md:right-20 border-t border-slate-800 bg-slate-950/90 backdrop-blur-sm z-30 dark:bg-slate-950/90 light:bg-slate-100/90 light:border-slate-300 transition-colors duration-300">
+        <div className="max-w-4xl mx-auto px-4 md:px-8 py-4 pb-6 md:pb-6">
+          <form onSubmit={handleSubmit} className="flex items-center gap-2">
+            <span className="text-green-500 shrink-0 text-xs md:text-sm">visitor@broesamle.dev:{currentPath === '/home/visitor' ? '~' : currentPath}$</span>
+            <input
+              ref={inputRef}
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={handleKeyDown}
+              className="flex-1 bg-transparent border-none outline-none text-white placeholder-slate-600 caret-accent min-w-0 dark:text-white light:text-slate-900 transition-colors duration-300"
+              autoFocus
+              spellCheck={false}
+              autoComplete="off"
+            />
+          </form>
+        </div>
       </div>
     </div>
   );

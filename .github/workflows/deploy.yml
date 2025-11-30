@@ -24,18 +24,53 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build
-        run: npm run build
-
-      - name: Commit and Push httpdocs
+      - name: Bump Version
+        id: bump
+        env:
+          COMMITS: ${{ toJSON(github.event.commits) }}
         run: |
           git config --global user.name 'GitHub Action'
           git config --global user.email 'action@github.com'
-          git add httpdocs
+          
+          echo "$COMMITS" > commits.json
+          if [ -s commits.json ] && [ "$(cat commits.json)" != "null" ]; then
+            MESSAGES=$(jq -r '.[].message' commits.json)
+          else
+            MESSAGES="${{ github.event.head_commit.message }}"
+          fi
+          
+          echo "Commit messages to analyze:"
+          echo "$MESSAGES"
+          
+          # Default to patch
+          BUMP_TYPE="patch"
+          
+          if echo "$MESSAGES" | grep -q "\[major\]"; then
+            echo "Found [major] tag"
+            BUMP_TYPE="major"
+          elif echo "$MESSAGES" | grep -q "\[minor\]"; then
+            echo "Found [minor] tag"
+            BUMP_TYPE="minor"
+          fi
+          
+          echo "Bumping $BUMP_TYPE version"
+          npm version $BUMP_TYPE --no-git-tag-version
+          
+          NEW_VERSION=$(node -p "require('./package.json').version")
+          echo "New version: $NEW_VERSION"
+          echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Build
+        run: npm run build
+
+      - name: Commit and Push
+        run: |
+          git add package.json package-lock.json httpdocs
+          
           # Check if there are changes to commit
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "Deploy: Update httpdocs [skip ci]"
+            git commit -m "Deploy: Bump to ${{ steps.bump.outputs.new_version }} [skip ci]"
             git push
           fi
