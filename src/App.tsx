@@ -7,9 +7,9 @@ function AppContent() {
   const { messages, isTyping, sendMessage, currentPath, tabComplete } = useChat();
 
   return (
-    <div className="min-h-screen font-mono selection:bg-accent/30 transition-colors duration-300 bg-slate-100 text-slate-900 dark:bg-slate-950 dark:text-slate-200">
+    <div className="min-h-screen supports-[min-height:100dvh]:min-h-[100dvh] font-mono selection:bg-accent/30 transition-colors duration-300 bg-slate-100 text-slate-900 dark:bg-slate-950 dark:text-slate-200">
       <SocialSidebar onCommand={sendMessage} />
-      <main className="pt-16 md:pt-0 md:pr-20 min-h-screen transition-all duration-300">
+      <main className="pt-16 md:pt-0 md:pr-20 min-h-screen supports-[min-height:100dvh]:min-h-[100dvh] transition-all duration-300">
         <ChatInterface 
           messages={messages} 
           isTyping={isTyping} 

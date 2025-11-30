@@ -30,6 +30,16 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ onSendMessage, mes
     return () => document.removeEventListener('click', handleClick);
   }, []);
 
+  // Scroll to bottom on window resize (handles mobile keyboard)
+  useEffect(() => {
+    const handleResize = () => {
+      // Small delay to allow layout to update
+      setTimeout(scrollToBottom, 100);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (input.trim()) {
@@ -67,7 +77,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ onSendMessage, mes
   };
 
   return (
-    <div className="font-mono text-sm md:text-base p-4 md:p-8 max-w-4xl mx-auto min-h-screen flex flex-col">
+    <div className="font-mono text-sm md:text-base p-4 md:p-8 max-w-4xl mx-auto min-h-screen supports-[min-height:100dvh]:min-h-[100dvh] flex flex-col">
       {/* Terminal Header */}
       <div className="mb-8 text-slate-500 text-xs md:text-sm border-b border-slate-800 pb-2 hidden md:block">
         <p>Patrick Brösamle (pbfman) - Portfolio Terminal</p>
