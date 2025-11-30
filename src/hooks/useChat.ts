@@ -3,6 +3,7 @@ import { Message } from '../types';
 import { knowledgeBase, defaultResponse } from '../data/knowledgeBase';
 import { fileSystem, FileSystemItem } from '../data/fileSystem';
 import { useTheme } from '../context/ThemeContext';
+import pkg from '../../package.json';
 
 export const useChat = () => {
   const { theme, setTheme } = useTheme();
@@ -12,7 +13,7 @@ export const useChat = () => {
     {
       id: '1',
       type: 'text',
-      text: "Welcome to Patrick Brösamle's Portfolio Terminal v1.0.0\nSystem initialized.\n\nType `help` to see available commands.",
+      text: `Welcome to Patrick Brösamle's Portfolio Terminal v${pkg.version}\nSystem initialized.\n\nType \`help\` to see available commands.`,
       sender: 'bot',
       timestamp: new Date()
     }
@@ -227,7 +228,7 @@ export const useChat = () => {
                 setMessages([{
                     id: Date.now().toString(),
                     type: 'text',
-                    text: "Welcome to Patrick Brösamle's Portfolio Terminal v1.0.0\nSystem initialized.\n\nType `help` to see available commands.",
+                    text: `Welcome to Patrick Brösamle's Portfolio Terminal v${pkg.version}\nSystem initialized.\n\nType \`help\` to see available commands.`,
                     sender: 'bot',
                     timestamp: new Date()
                 }]);
