@@ -161,7 +161,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ onSendMessage, mes
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
-              className="flex-1 bg-transparent border-none outline-none text-white placeholder-slate-600 caret-accent min-w-0 dark:text-white light:text-slate-900 transition-colors duration-300"
+              className="flex-1 bg-transparent border-none outline-none text-base md:text-sm text-white placeholder-slate-600 caret-accent min-w-0 dark:text-white light:text-slate-900 transition-colors duration-300"
               autoFocus
               spellCheck={false}
               autoComplete="off"
