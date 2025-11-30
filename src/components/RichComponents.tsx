@@ -1,5 +1,5 @@
 import React from 'react';
-import { Terminal, Cloud, Cpu, Layout } from 'lucide-react';
+import { Terminal, Cloud, Cpu, Layout, ExternalLink } from 'lucide-react';
 
 export const SkillsComponent: React.FC = () => {
   const skillCategories = [
@@ -93,33 +93,147 @@ export const ProjectsComponent: React.FC = () => {
       <div className="bg-slate-900/50 border border-slate-700 p-4 rounded-lg dark:bg-slate-900/50 dark:border-slate-700 light:bg-slate-200/50 light:border-slate-300">
         <div className="flex justify-between items-start">
           <h3 className="font-bold text-white dark:text-white light:text-slate-900">
-            <a href="https://couponvault.de" target="_blank" rel="noreferrer" className="hover:text-accent transition-colors">
-              CouponVault.de
+            <a href="https://couponvault.de" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-accent hover:underline transition-colors">
+              CouponVault
+              <ExternalLink size={16} />
             </a>
           </h3>
           <span className="text-xs bg-green-500/20 text-green-400 px-2 py-0.5 rounded dark:text-green-400 light:text-green-600">Live</span>
         </div>
         <p className="text-sm text-slate-400 mt-2 dark:text-slate-400 light:text-slate-600">
-          A comprehensive platform for discovering and sharing the best deals and coupons.
+          A comprehensive platform for saving, organizing and sharing the best deals and coupons.
         </p>
         <div className="mt-3 flex gap-2 text-xs font-mono text-slate-500 dark:text-slate-500 light:text-slate-600">
-          <span>Web App</span>
-          <span>Deals</span>
+          <span>Android App</span>
+          <span>React Native</span>
+          <span>Typescript</span>
+          <span>Google Gemini</span>
         </div>
       </div>
 
       <div className="bg-slate-900/50 border border-slate-700 p-4 rounded-lg dark:bg-slate-900/50 dark:border-slate-700 light:bg-slate-200/50 light:border-slate-300">
         <div className="flex justify-between items-start">
-          <h3 className="font-bold text-white dark:text-white light:text-slate-900">Portfolio Terminal</h3>
-          <span className="text-xs bg-accent/20 text-accent px-2 py-0.5 rounded">Active</span>
+          <h3 className="font-bold text-white dark:text-white light:text-slate-900">
+            <a href="https://github.com/pbfman/portfolio" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-accent hover:underline transition-colors">
+              Portfolio Terminal
+              <ExternalLink size={16} />
+            </a>
+          </h3>
+          <span className="text-xs bg-green-500/20 text-green-400 px-2 py-0.5 rounded dark:text-green-400 light:text-green-600">Live</span>
         </div>
         <p className="text-sm text-slate-400 mt-2 dark:text-slate-400 light:text-slate-600">
-          A React-based interactive terminal portfolio featuring a local mock-LLM chat interface.
+          A React-based interactive terminal portfolio.
         </p>
         <div className="mt-3 flex gap-2 text-xs font-mono text-slate-500 dark:text-slate-500 light:text-slate-600">
           <span>React</span>
           <span>TypeScript</span>
           <span>Tailwind</span>
+        </div>
+      </div>
+
+      <div className="bg-slate-900/50 border border-slate-700 p-4 rounded-lg dark:bg-slate-900/50 dark:border-slate-700 light:bg-slate-200/50 light:border-slate-300">
+        <div className="flex justify-between items-start">
+          <h3 className="font-bold text-white dark:text-white light:text-slate-900">
+            <a href="https://avantgarde-labs.com/de/case-studies/zz-tool-bei-fsd/" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-accent hover:underline transition-colors">
+              ZZ-Tool
+              <ExternalLink size={16} />
+            </a>
+          </h3>
+          <span className="text-xs bg-green-500/20 text-green-400 px-2 py-0.5 rounded dark:text-green-400 light:text-green-600">Live</span>
+        </div>
+        <p className="text-sm text-slate-400 mt-2 dark:text-slate-400 light:text-slate-600">
+          Maintained and enhanced a legacy tool with AI (.NET Framework) while developing new microservices to replace it with modern features and technologies.
+        </p>
+        <div className="mt-3 flex flex-wrap gap-2 text-xs font-mono text-slate-500 dark:text-slate-500 light:text-slate-600">
+          <span>C# .NET</span>
+          <span>ASP.NET Core</span>
+          <span>EF Core</span>
+          <span>REST</span>
+          <span>AI</span>
+          <span>Python</span>
+          <span>Microservices</span>
+          <span>Kubernetes</span>
+        </div>
+      </div>
+
+      <div className="bg-slate-900/50 border border-slate-700 p-4 rounded-lg dark:bg-slate-900/50 dark:border-slate-700 light:bg-slate-200/50 light:border-slate-300">
+        <div className="flex justify-between items-start">
+          <h3 className="font-bold text-white dark:text-white light:text-slate-900">
+            <a href="https://avantgarde-labs.com/de/case-studies/otx-ninja-bei-fsd/" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-accent hover:underline transition-colors">
+              OTX-Ninja
+              <ExternalLink size={16} />
+            </a>
+          </h3>
+          <span className="text-xs bg-green-500/20 text-green-400 px-2 py-0.5 rounded dark:text-green-400 light:text-green-600">Live</span>
+        </div>
+        <p className="text-sm text-slate-400 mt-2 dark:text-slate-400 light:text-slate-600">
+          A web application for configuring OTX vehicle diagnostic XML files, integrating data from ODX.
+        </p>
+        <div className="mt-3 flex gap-2 text-xs font-mono text-slate-500 dark:text-slate-500 light:text-slate-600">
+          <span>React</span>
+          <span>Python</span>
+          <span>Django</span>
+          <span>ODX</span>
+          <span>OTX</span>
+        </div>
+      </div>
+
+      <div className="bg-slate-900/50 border border-slate-700 p-4 rounded-lg dark:bg-slate-900/50 dark:border-slate-700 light:bg-slate-200/50 light:border-slate-300">
+        <div className="flex justify-between items-start">
+          <h3 className="font-bold text-white dark:text-white light:text-slate-900">
+            <a href="https://avantgarde-labs.com/de/case-studies/odx-ninja-bei-fsd/" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-accent hover:underline transition-colors">
+              ODX-Ninja
+              <ExternalLink size={16} />
+            </a>
+          </h3>
+          <span className="text-xs bg-green-500/20 text-green-400 px-2 py-0.5 rounded dark:text-green-400 light:text-green-600">Live</span>
+        </div>
+        <p className="text-sm text-slate-400 mt-2 dark:text-slate-400 light:text-slate-600">
+          A data transformation tool that aggregates, adapts, and converts individual vehicle diagnostic data from basic structured formats into the standardized ODX XML format.
+        </p>
+        <div className="mt-3 flex gap-2 text-xs font-mono text-slate-500 dark:text-slate-500 light:text-slate-600">
+          <span>Python</span>
+          <span>XSD/XML</span>
+          <span>ODX</span>
+        </div>
+      </div>
+
+      <div className="bg-slate-900/50 border border-slate-700 p-4 rounded-lg dark:bg-slate-900/50 dark:border-slate-700 light:bg-slate-200/50 light:border-slate-300">
+        <div className="flex justify-between items-start">
+          <h3 className="font-bold text-white dark:text-white light:text-slate-900">
+            Dresden Science Calendar App
+          </h3>
+          <span className="text-xs bg-slate-700 text-slate-300 px-2 py-0.5 rounded">Archived</span>
+        </div>
+        <p className="text-sm text-slate-400 mt-2 dark:text-slate-400 light:text-slate-600">
+          A Windows 8 app integrating the Dresden Science Calendar via XML API, featuring native calendar synchronization.
+        </p>
+        <div className="mt-3 flex gap-2 text-xs font-mono text-slate-500 dark:text-slate-500 light:text-slate-600">
+          <span>C# .NET</span>
+          <span>REST API</span>
+          <span>Windows 8</span>
+        </div>
+      </div>
+
+      <div className="bg-slate-900/50 border border-slate-700 p-4 rounded-lg dark:bg-slate-900/50 dark:border-slate-700 light:bg-slate-200/50 light:border-slate-300">
+        <div className="flex justify-between items-start">
+          <h3 className="font-bold text-white dark:text-white light:text-slate-900">
+            <a href="https://dresden-science-calendar.de/" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-accent hover:underline transition-colors">
+              Dresden Science Calendar
+              <ExternalLink size={16} />
+            </a>
+          </h3>
+          <span className="text-xs bg-green-500/20 text-green-400 px-2 py-0.5 rounded dark:text-green-400 light:text-green-600">Live</span>
+        </div>
+        <p className="text-sm text-slate-400 mt-2 dark:text-slate-400 light:text-slate-600">
+          An online calendar for aggregating and displaying scientific events in Dresden.
+        </p>
+        <div className="mt-3 flex flex-wrap gap-2 text-xs font-mono text-slate-500 dark:text-slate-500 light:text-slate-600">
+          <span>PHP</span>
+          <span>CakePHP</span>
+          <span>Perl</span>
+          <span>JavaScript</span>
+          <span>HTML/CSS</span>
         </div>
       </div>
       
