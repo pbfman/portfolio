@@ -14,7 +14,7 @@ interface ChatInterfaceProps {
 
 export const ChatInterface: React.FC<ChatInterfaceProps> = ({ onSendMessage, messages, isTyping, currentPath, onTabComplete, getSuggestions }) => {
   const [input, setInput] = useState('');
-  const [suggestion, setSuggestion] = useState<string | null>(null);
+  const [suggestions, setSuggestions] = useState<string[]>([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -44,25 +44,18 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ onSendMessage, mes
   }, []);
 
   useEffect(() => {
-    const suggestions = getSuggestions(input);
-    if (suggestions.length > 0) {
-      setSuggestion(suggestions[0]);
-    } else {
-      setSuggestion(null);
-    }
+    setSuggestions(getSuggestions(input));
   }, [input, getSuggestions]);
 
-  const handleSuggestionClick = () => {
-    if (suggestion) {
-      const args = input.split(' ');
-      if (input === '') {
-        setInput(suggestion);
-      } else {
-        args[args.length - 1] = suggestion;
-        setInput(args.join(' '));
-      }
-      inputRef.current?.focus();
+  const handleSuggestionClick = (suggestion: string) => {
+    const args = input.split(' ');
+    if (input === '') {
+      setInput(suggestion);
+    } else {
+      args[args.length - 1] = suggestion;
+      setInput(args.join(' '));
     }
+    inputRef.current?.focus();
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -118,7 +111,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ onSendMessage, mes
             <div key={msg.id} className="animate-in fade-in duration-300">
               {msg.sender === 'user' ? (
                 <div className="flex gap-2 text-slate-400 mt-6 mb-2 break-words dark:text-slate-400 light:text-slate-600">
-                  <span className="text-green-500 shrink-0">visitor@broesamle.dev:{currentPath === '/home/visitor' ? '~' : currentPath}$</span>
+                  <span className="text-green-500 shrink-0">guest@broesamle.dev:{currentPath === '/home/guest' ? '~' : currentPath}$</span>
                   <span className="text-white dark:text-white light:text-slate-900">{msg.text}</span>
                 </div>
               ) : (
@@ -143,23 +136,25 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ onSendMessage, mes
 
       {/* Input Area */}
       <div className="shrink-0 border-t border-slate-800 bg-slate-950/90 backdrop-blur-sm dark:bg-slate-950/90 light:bg-slate-100/90 light:border-slate-300 transition-colors duration-300">
-        {/* Mobile Suggestion Chip */}
-        {suggestion && (
-          <div className="px-4 md:px-8 pt-2 md:hidden">
-            <button
-              onClick={handleSuggestionClick}
-              className="flex items-center gap-1 px-3 py-1 bg-slate-800 text-accent text-xs rounded-full border border-slate-700 active:scale-95 transition-transform"
-            >
-              <Sparkles size={12} />
-              <span>{suggestion}</span>
-            </button>
+        {/* Mobile Suggestion Chips */}
+        {suggestions.length > 0 && (
+          <div className="px-4 md:px-8 pt-2 md:hidden flex gap-2 overflow-x-auto scrollbar-hide">
+            {suggestions.map((sugg) => (
+              <button
+                key={sugg}
+                onClick={() => handleSuggestionClick(sugg)}
+                className="flex items-center gap-1 px-3 py-1 bg-slate-800 text-accent text-xs rounded-full border border-slate-700 active:scale-95 transition-transform whitespace-nowrap"
+              >
+                <Sparkles size={12} />
+                <span>{sugg}</span>
+              </button>
+            ))}
           </div>
         )}
         
         <div className="max-w-4xl mx-auto px-4 md:px-8 py-2 pb-2 md:py-4 md:pb-6">
           <form onSubmit={handleSubmit} className="flex items-center gap-2">
-            <span className="text-green-500 shrink-0 text-xs md:text-sm hidden md:inline">visitor@broesamle.dev:{currentPath === '/home/visitor' ? '~' : currentPath}$</span>
-            <span className="text-green-500 shrink-0 text-xs md:text-sm md:hidden">{currentPath === '/home/visitor' ? '~' : currentPath}$</span>
+            <span className="text-green-500 shrink-0 text-xs md:text-sm">guest@broesamle.dev:{currentPath === '/home/guest' ? '~' : currentPath}$</span>
             <input
               ref={inputRef}
               type="text"

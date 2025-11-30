@@ -19,7 +19,7 @@ export const useChat = () => {
     }
   ]);
   const [isTyping, setIsTyping] = useState(false);
-  const [currentPath, setCurrentPath] = useState<string[]>(['home', 'visitor']);
+  const [currentPath, setCurrentPath] = useState<string[]>(['home', 'guest']);
 
   // Helper to get item at path
   const getItemAtPath = (path: string[]): FileSystemItem | null => {
@@ -37,7 +37,7 @@ export const useChat = () => {
   // Helper to resolve path string to array
   const resolvePath = (pathStr: string): string[] => {
     if (pathStr === '/') return [];
-    if (pathStr === '~') return ['home', 'visitor'];
+    if (pathStr === '~') return ['home', 'guest'];
     
     let parts = pathStr.split('/').filter(p => p);
     let newPath = pathStr.startsWith('/') ? [] : [...currentPath];
@@ -202,7 +202,7 @@ export const useChat = () => {
                 "rm: removing '/bin'",
                 "rm: removing '/usr'",
                 "rm: removing '/etc'",
-                "rm: removing '/home/visitor'",
+                "rm: removing '/home/guest'",
                 "rm: removing '/var'",
                 "CRITICAL ERROR: System files missing.",
                 "Kernel panic - not syncing: Attempted to kill init!",
@@ -232,7 +232,7 @@ export const useChat = () => {
                     sender: 'bot',
                     timestamp: new Date()
                 }]);
-                setCurrentPath(['home', 'visitor']);
+                setCurrentPath(['home', 'guest']);
                 setIsTyping(false);
             }, currentDelay + 2500);
 
@@ -246,7 +246,7 @@ export const useChat = () => {
       }
 
       else if (command === 'whoami') {
-        responseMsg.text = "visitor";
+        responseMsg.text = "guest";
       }
 
       else if (command === 'rm') {
@@ -304,7 +304,7 @@ export const useChat = () => {
   }, [currentPath, themeConfirmationStep, theme]);
 
   const getSuggestions = (input: string): string[] => {
-    if (!input) return ['help'];
+    if (!input) return ['help', 'about', 'skills', 'projects'];
     
     const args = input.split(' ');
     const isNewArg = input.endsWith(' ');
@@ -316,7 +316,7 @@ export const useChat = () => {
     // Command completion
     if (args.length === 1) {
       const commands = ['help', 'about', 'skills', 'projects', 'contact', 'ls', 'cd', 'cat', 'pwd', 'clear', 'sudo', 'whoami', 'rm', 'vi', 'vim', 'nano'];
-      return commands.filter(cmd => cmd.startsWith(currentWord));
+      return commands.filter(cmd => cmd.startsWith(currentWord)).slice(0, 4);
     }
 
     // File completion
@@ -358,7 +358,7 @@ export const useChat = () => {
 
                 if (isDir) completedPath += '/';
                 return completedPath;
-            });
+            }).slice(0, 4);
         }
     }
     return [];
