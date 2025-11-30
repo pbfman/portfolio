@@ -303,23 +303,20 @@ export const useChat = () => {
 
   }, [currentPath, themeConfirmationStep, theme]);
 
-  const tabComplete = (input: string): string => {
+  const getSuggestions = (input: string): string[] => {
+    if (!input) return ['help'];
+    
     const args = input.split(' ');
     const isNewArg = input.endsWith(' ');
     
-    if (isNewArg && args.length > 1) return input;
+    if (isNewArg && args.length > 1) return [];
 
     const currentWord = args[args.length - 1];
 
     // Command completion
     if (args.length === 1) {
       const commands = ['help', 'about', 'skills', 'projects', 'contact', 'ls', 'cd', 'cat', 'pwd', 'clear', 'sudo', 'whoami', 'rm', 'vi', 'vim', 'nano'];
-      const matches = commands.filter(cmd => cmd.startsWith(currentWord));
-      
-      if (matches.length === 1) {
-        return matches[0] + ' ';
-      }
-      return input;
+      return commands.filter(cmd => cmd.startsWith(currentWord));
     }
 
     // File completion
@@ -346,10 +343,9 @@ export const useChat = () => {
         if (dirItem && dirItem.type === 'directory' && dirItem.children) {
             const candidates = Object.keys(dirItem.children);
             const matches = candidates.filter(name => name.startsWith(partialName));
-
-            if (matches.length === 1) {
-                const match = matches[0];
-                const item = dirItem.children[match];
+            
+            return matches.map(match => {
+                const item = dirItem!.children![match];
                 const isDir = item.type === 'directory';
                 
                 let completedPath = '';
@@ -361,13 +357,20 @@ export const useChat = () => {
                 }
 
                 if (isDir) completedPath += '/';
-                
-                args[args.length - 1] = completedPath;
-                return args.join(' ');
-            }
+                return completedPath;
+            });
         }
     }
+    return [];
+  };
 
+  const tabComplete = (input: string): string => {
+    const suggestions = getSuggestions(input);
+    if (suggestions.length === 1) {
+        const args = input.split(' ');
+        args[args.length - 1] = suggestions[0];
+        return args.join(' ');
+    }
     return input;
   };
 
@@ -376,6 +379,7 @@ export const useChat = () => {
     isTyping,
     sendMessage: processMessage,
     currentPath: '/' + currentPath.join('/'),
-    tabComplete
+    tabComplete,
+    getSuggestions
   };
 };

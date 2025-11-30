@@ -4,7 +4,7 @@ import { SocialSidebar } from './components/SocialSidebar';
 import { ThemeProvider } from './context/ThemeContext';
 
 function AppContent() {
-  const { messages, isTyping, sendMessage, currentPath, tabComplete } = useChat();
+  const { messages, isTyping, sendMessage, currentPath, tabComplete, getSuggestions } = useChat();
 
   return (
     <div className="h-[100dvh] overflow-hidden font-mono selection:bg-accent/30 transition-colors duration-300 bg-slate-100 text-slate-900 dark:bg-slate-950 dark:text-slate-200">
@@ -16,6 +16,7 @@ function AppContent() {
           onSendMessage={sendMessage}
           currentPath={currentPath}
           onTabComplete={tabComplete}
+          getSuggestions={getSuggestions}
         />
       </main>
     </div>

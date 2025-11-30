@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Message } from '../types';
 import { SkillsComponent, ContactComponent, AboutComponent, ProjectsComponent } from './RichComponents';
+import { CornerDownLeft, Sparkles } from 'lucide-react';
 
 interface ChatInterfaceProps {
   onSendMessage: (message: string) => void;
@@ -8,10 +9,12 @@ interface ChatInterfaceProps {
   isTyping: boolean;
   currentPath: string;
   onTabComplete: (input: string) => string;
+  getSuggestions: (input: string) => string[];
 }
 
-export const ChatInterface: React.FC<ChatInterfaceProps> = ({ onSendMessage, messages, isTyping, currentPath, onTabComplete }) => {
+export const ChatInterface: React.FC<ChatInterfaceProps> = ({ onSendMessage, messages, isTyping, currentPath, onTabComplete, getSuggestions }) => {
   const [input, setInput] = useState('');
+  const [suggestion, setSuggestion] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -39,6 +42,28 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ onSendMessage, mes
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  useEffect(() => {
+    const suggestions = getSuggestions(input);
+    if (suggestions.length > 0) {
+      setSuggestion(suggestions[0]);
+    } else {
+      setSuggestion(null);
+    }
+  }, [input, getSuggestions]);
+
+  const handleSuggestionClick = () => {
+    if (suggestion) {
+      const args = input.split(' ');
+      if (input === '') {
+        setInput(suggestion);
+      } else {
+        args[args.length - 1] = suggestion;
+        setInput(args.join(' '));
+      }
+      inputRef.current?.focus();
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -118,9 +143,23 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ onSendMessage, mes
 
       {/* Input Area */}
       <div className="shrink-0 border-t border-slate-800 bg-slate-950/90 backdrop-blur-sm dark:bg-slate-950/90 light:bg-slate-100/90 light:border-slate-300 transition-colors duration-300">
-        <div className="max-w-4xl mx-auto px-4 md:px-8 py-4 pb-6 md:pb-6">
+        {/* Mobile Suggestion Chip */}
+        {suggestion && (
+          <div className="px-4 md:px-8 pt-2 md:hidden">
+            <button
+              onClick={handleSuggestionClick}
+              className="flex items-center gap-1 px-3 py-1 bg-slate-800 text-accent text-xs rounded-full border border-slate-700 active:scale-95 transition-transform"
+            >
+              <Sparkles size={12} />
+              <span>{suggestion}</span>
+            </button>
+          </div>
+        )}
+        
+        <div className="max-w-4xl mx-auto px-4 md:px-8 py-2 pb-2 md:py-4 md:pb-6">
           <form onSubmit={handleSubmit} className="flex items-center gap-2">
-            <span className="text-green-500 shrink-0 text-xs md:text-sm">visitor@broesamle.dev:{currentPath === '/home/visitor' ? '~' : currentPath}$</span>
+            <span className="text-green-500 shrink-0 text-xs md:text-sm hidden md:inline">visitor@broesamle.dev:{currentPath === '/home/visitor' ? '~' : currentPath}$</span>
+            <span className="text-green-500 shrink-0 text-xs md:text-sm md:hidden">{currentPath === '/home/visitor' ? '~' : currentPath}$</span>
             <input
               ref={inputRef}
               type="text"
@@ -132,6 +171,13 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ onSendMessage, mes
               spellCheck={false}
               autoComplete="off"
             />
+            <button 
+              type="submit"
+              className="p-2 text-slate-400 hover:text-accent transition-colors md:hidden"
+              aria-label="Send command"
+            >
+              <CornerDownLeft size={18} />
+            </button>
           </form>
         </div>
       </div>
